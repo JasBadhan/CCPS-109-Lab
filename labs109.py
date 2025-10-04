@@ -1,5 +1,5 @@
 n = 100
-####################
+############
 def ryerson_letter_grade(n):
     if n < 50:
         return 'F'
