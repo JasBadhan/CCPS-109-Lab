@@ -1,5 +1,5 @@
-n = 100
-############
+g = 100
+
 def ryerson_letter_grade(n):
     if n < 50:
         return 'F'
@@ -51,3 +51,49 @@ def riffle(items, out = True):
             items_riffle.append(items_right[i])
             items_riffle.append(items_left[i])
     return items_riffle
+
+def is_cyclops(n):
+    if n == 0:
+        return True
+    digits = []
+    temp = n
+    while temp > 0:
+        digits.append(temp%10)
+        temp //= 10
+    len_n = len(digits)
+    if len_n % 2 == 0:
+        return False
+
+    middle = len_n // 2
+
+    if digits[middle] == 0 and digits.count(0) == 1 and n >= 0:
+        return True
+    else:
+        return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
