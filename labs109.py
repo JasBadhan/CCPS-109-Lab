@@ -70,30 +70,28 @@ def is_cyclops(n):
         return True
     else:
         return False
+"""
+def colour_trio(colours):
+    
+    if len(colours) == 1:
+        return colours
+    
+    col =[]
+    
+    n_col = str(colours)
+    len_col = len(str(colours))
+    
+    while len_col > 0:
+        col.append()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"""
+def is_chess_960(row):
+     fir_pos_r = row.index("r")
+     sec_pos_r = row.index("r", fir_pos_r + 1)
+     pos_king = row.index("K")
+     fir_pos_b = row.index("b")
+     sec_pos_b = row.index("b", fir_pos_b + 1)
+     if (fir_pos_r < pos_king < sec_pos_r and (fir_pos_b % 2) != (sec_pos_b % 2)):
+         return True
+     else:
+         return False
