@@ -95,3 +95,17 @@ def is_chess_960(row):
          return True
      else:
          return False
+
+
+def multiplicative_persistence(n, ignore_zeros=False):
+    iters = 0
+    while n >= 10:
+        product = 1
+        for digit in str(n):
+            if digit == "0" and ignore_zeros:
+                continue
+            product *= int(digit)
+        n = product
+        iters += 1
+    return iters
+
