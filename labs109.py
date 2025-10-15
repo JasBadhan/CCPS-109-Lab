@@ -19,6 +19,7 @@ def ryerson_letter_grade(n):
         adjust = ""
     return "DCB"[tens - 5] + adjust
 
+
 def is_ascending(items):
     pre_item = items[0] - 1
     for item in items:
@@ -27,6 +28,8 @@ def is_ascending(items):
         pre_item = item
     return True
     
+
+
 def only_odd_digits(n):
     total_length = len(str(n))
     len_n = 0
@@ -37,6 +40,8 @@ def only_odd_digits(n):
         return True
     else:
         return False
+
+
 
 def riffle(items, out = True):
     items_left = items[:len(items)//2]
@@ -51,6 +56,8 @@ def riffle(items, out = True):
             items_riffle.append(items_right[i])
             items_riffle.append(items_left[i])
     return items_riffle
+
+
 
 def is_cyclops(n):
     if n == 0:
@@ -70,21 +77,8 @@ def is_cyclops(n):
         return True
     else:
         return False
-"""
-def colour_trio(colours):
-    
-    if len(colours) == 1:
-        return colours
-    
-    col =[]
-    
-    n_col = str(colours)
-    len_col = len(str(colours))
-    
-    while len_col > 0:
-        col.append()
 
-"""
+
 def is_chess_960(row):
      fir_pos_r = row.index("r")
      sec_pos_r = row.index("r", fir_pos_r + 1)
@@ -109,3 +103,42 @@ def multiplicative_persistence(n, ignore_zeros=False):
         iters += 1
     return iters
 
+
+
+def discrete_rounding(n):
+    for k in range(n -1, 1, -1):
+        remainder = n % k
+        if remainder != 0:
+           n = n + k - remainder
+    return n
+
+
+
+def extract_increasing(digits):
+    result = []
+    current = ""
+    previous = -1
+    for digit in digits:
+        current = current + digit
+        num = int(current)
+        if num > previous:
+            result.append(num)
+            previous = num
+            current = ""
+    return result
+
+
+def taxi_zum_zum(moves):
+    x, y = 0, 0
+    directions = [(0,1), (1,0), (0, -1), (-1,0)]
+    dir_index = 0
+    for move in moves:
+        if move == 'L':
+            dir_index = (dir_index - 1) % 4
+        if move == 'R':
+            dir_index = (dir_index + 1) % 4
+        if move == 'F':
+            dx, dy = directions[dir_index]
+            x = x + dx
+            y = y + dy
+    return (x, y)
