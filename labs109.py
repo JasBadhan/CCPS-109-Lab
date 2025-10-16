@@ -142,3 +142,16 @@ def taxi_zum_zum(moves):
             x = x + dx
             y = y + dy
     return (x, y)
+
+
+def colour_trio(colours):
+    
+    col_rule = {'rr':'r', 'yy':'y', 'bb': 'b',
+            'ry': 'b', 'yr': 'b', 
+            'yb': 'r', 'by': 'r',
+            'rb': 'y', 'br': 'y'
+            }
+
+    while len(colours) > 1:
+        colours = ''.join(col_rule[colours[i:i+2]] for i in range(len(colours) - 1))
+    return colours
