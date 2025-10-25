@@ -145,7 +145,7 @@ def taxi_zum_zum(moves):
 
 
 def colour_trio(colours):
-    
+
     col_rule = {'rr':'r', 'yy':'y', 'bb': 'b',
             'ry': 'b', 'yr': 'b', 
             'yb': 'r', 'by': 'r',
@@ -197,3 +197,15 @@ def topswops(cards):
         cards[:k] = reversed(cards[:k])
         count+=1
     return count
+
+def tr(text, ch_from, ch_to):
+    transform = {ch_from[i]: ch_to[i] for i in range(len(ch_from))}
+    
+    result = []
+    for char in text:
+        if char in transform:
+            result.append(transform[char])
+        else:
+            result.append(char)
+    return ''.join(result)
+
