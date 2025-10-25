@@ -155,3 +155,45 @@ def colour_trio(colours):
     while len(colours) > 1:
         colours = ''.join(col_rule[colours[i:i+2]] for i in range(len(colours) - 1))
     return colours
+
+
+
+def safe_squares_rooks(n, rooks):
+    attacked_rows = set()
+    attacked_cols = set()
+
+    for row, col in rooks:
+        attacked_rows.add(row)
+        attacked_cols.add(col)
+    return (n - len(attacked_rows))*(n - len(attacked_cols))
+
+def multiplicative_persistence(n, ignore_zeros=False):
+    if ignore_zeros:
+        persistence = 0
+        while n >= 10:
+            product = 1
+            for digit in str(n):
+                if digit !='0':
+                    product = product * int(digit)
+            persistence += 1
+            n = product
+        return persistence
+    else:
+        persistence = 0
+        while n >= 10:
+            product = 1
+            for digit in str(n):
+                product = product * int(digit)
+            persistence += 1
+            n = product
+        return persistence
+
+def topswops(cards):
+    cards = list(cards)
+    n = len(cards)
+    count = 0
+    while cards[0] != 1:
+        k = cards[0]
+        cards[:k] = reversed(cards[:k])
+        count+=1
+    return count
