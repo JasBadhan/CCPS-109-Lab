@@ -27,8 +27,7 @@ def is_ascending(items):
             return False
         pre_item = item
     return True
-    
-
+  
 
 def only_odd_digits(n):
     total_length = len(str(n))
@@ -40,7 +39,6 @@ def only_odd_digits(n):
         return True
     else:
         return False
-
 
 
 def riffle(items, out = True):
@@ -56,7 +54,6 @@ def riffle(items, out = True):
             items_riffle.append(items_right[i])
             items_riffle.append(items_left[i])
     return items_riffle
-
 
 
 def is_cyclops(n):
@@ -104,14 +101,12 @@ def multiplicative_persistence(n, ignore_zeros=False):
     return iters
 
 
-
 def discrete_rounding(n):
     for k in range(n -1, 1, -1):
         remainder = n % k
         if remainder != 0:
            n = n + k - remainder
     return n
-
 
 
 def extract_increasing(digits):
@@ -157,7 +152,6 @@ def colour_trio(colours):
     return colours
 
 
-
 def safe_squares_rooks(n, rooks):
     attacked_rows = set()
     attacked_cols = set()
@@ -166,6 +160,7 @@ def safe_squares_rooks(n, rooks):
         attacked_rows.add(row)
         attacked_cols.add(col)
     return (n - len(attacked_rows))*(n - len(attacked_cols))
+
 
 def multiplicative_persistence(n, ignore_zeros=False):
     if ignore_zeros:
@@ -188,6 +183,7 @@ def multiplicative_persistence(n, ignore_zeros=False):
             n = product
         return persistence
 
+
 def topswops(cards):
     cards = list(cards)
     n = len(cards)
@@ -197,6 +193,7 @@ def topswops(cards):
         cards[:k] = reversed(cards[:k])
         count+=1
     return count
+
 
 def tr(text, ch_from, ch_to):
     transform = {ch_from[i]: ch_to[i] for i in range(len(ch_from))}
@@ -208,4 +205,21 @@ def tr(text, ch_from, ch_to):
         else:
             result.append(char)
     return ''.join(result)
+
+
+def count_cigarettes(n, k):
+    tot_cig_smk = n
+    butts = n
+
+    while butts >= k:
+        new_cigs = butts // k
+        tot_cig_smk = tot_cig_smk + new_cigs
+        butts = butts % k + new_cigs
+
+    return tot_cig_smk
+
+def word_positions(sentence, word):
+    return [i for i, w in enumerate(sentence.split()) if w == word]
+
+
 
