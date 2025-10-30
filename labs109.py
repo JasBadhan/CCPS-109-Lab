@@ -89,6 +89,7 @@ def is_chess_960(row):
 
 
 def multiplicative_persistence(n, ignore_zeros=False):
+
     iters = 0
     while n >= 10:
         product = 1
@@ -162,28 +163,6 @@ def safe_squares_rooks(n, rooks):
     return (n - len(attacked_rows))*(n - len(attacked_cols))
 
 
-def multiplicative_persistence(n, ignore_zeros=False):
-    if ignore_zeros:
-        persistence = 0
-        while n >= 10:
-            product = 1
-            for digit in str(n):
-                if digit !='0':
-                    product = product * int(digit)
-            persistence += 1
-            n = product
-        return persistence
-    else:
-        persistence = 0
-        while n >= 10:
-            product = 1
-            for digit in str(n):
-                product = product * int(digit)
-            persistence += 1
-            n = product
-        return persistence
-
-
 def topswops(cards):
     cards = list(cards)
     n = len(cards)
@@ -222,4 +201,47 @@ def word_positions(sentence, word):
     return [i for i, w in enumerate(sentence.split()) if w == word]
 
 
+def is_left_handed(pips):
+    pips_list = [
+                [1,2,3], [3,1,2], [2,3,1],
+                [1,4,2], [2,1,4], [4,2,1],
+                [1,3,5], [5,1,3], [3,5,1],
+                [1,5,4], [5,4,1], [4,1,5],
+                [6,3,2], [2,6,3], [3,2,6],
+                [6,2,4], [2,4,6], [4,6,2],
+                [6,5,3], [5,3,6], [3,6,5],
+                [6,4,5], [5,6,4], [4,5,6]
+                ]
+    return pips in pips_list
+
+
+def give_change(amount, coins):
+    result = []
+    for coin in coins:
+        while amount >= coin:
+            result.append(coin)
+            amount = amount - coin
+    return result
+
+
+def seven_zero(n):
+    if n%2 != 0 or n%5 != 0:
+        rem = 0
+        num = ''
+        while True:
+            rem = (rem * 10 + 7) % n
+            num = num + '7'
+            if rem == 0:
+                return int(num)
+    else:
+        d = 1
+        while True:
+            for k in range(1, d + 1):
+                num = '7' * k + '0' * (d-k)
+                rem = 0
+                for dig in num:
+                    rem = (rem * 10 + int(dig) % n)
+                if dig == 0:
+                    return int(dig)
+            d = d + 1
 
