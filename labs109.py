@@ -224,24 +224,115 @@ def give_change(amount, coins):
     return result
 
 
-def seven_zero(n):
-    if n%2 != 0 or n%5 != 0:
-        rem = 0
-        num = ''
-        while True:
-            rem = (rem * 10 + 7) % n
-            num = num + '7'
-            if rem == 0:
-                return int(num)
-    else:
-        d = 1
-        while True:
-            for k in range(1, d + 1):
-                num = '7' * k + '0' * (d-k)
-                rem = 0
-                for dig in num:
-                    rem = (rem * 10 + int(dig) % n)
-                if dig == 0:
-                    return int(dig)
-            d = d + 1
+def power_prefix(prefix):
+    
+    len_prefix = len(prefix)
+    k = 1
+    power_two = 2
+
+    while True:
+        power_str = str(power_two)
+        match_prefix = True
+
+        if len(power_str) < len_prefix:
+            match_prefix = False
+        else:
+            for p in range(len_prefix):
+                prefix_char = prefix[p]
+                power_char = power_str[p]
+
+                if prefix_char == '*':
+                    continue
+
+                if prefix_char != power_char:
+                    match_prefix = False
+                    break
+
+        if match_prefix:
+            return k
+
+        k = k + 1
+        power_two = power_two * 2
+
+
+def parking_lot_permutation(preferred_spot):
+    pref_spot_len = len(preferred_spot)
+    parking_spots = [None] * pref_spot_len
+
+    for car in range(pref_spot_len):
+        curnt_spot = preferred_spot[car]
+
+        while parking_spots[curnt_spot] is not None:
+            curnt_spot = (curnt_spot + 1) % pref_spot_len
+
+        parking_spots[curnt_spot] = car
+    
+    return parking_spots
+
+
+def winning_cards(cards, trump=None):
+    
+    ranks = {'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+         'nine': 9, 'ten': 10, 'jack': 11, 'queen': 12, 'king': 13, 'ace': 14}
+
+    trump_cards = [card for card in cards if card[1] == trump]
+
+    if trump_cards:
+        return max(trump_cards, key=lambda card: ranks[card[0]])
+
+    lead_suit = cards[0][1]
+    lead_suit_cards = [card for card in cards if card[1] == lead_suit]
+    return max(lead_suit_cards, key=lambda card: rank_order[card[0]])
+
+
+def knight_jump(knight, start, end):
+    
+    if len(knight) != len(start) or len(start) != len(end):
+        return False
+
+    difference = []
+    
+    for k in range(len(start)):
+        diff = abs(start[k] - end[k])
+        difference.append(diff)
+
+    difference.sort(reverse=True)
+
+    return tuple(difference) == tuple(knight)
+
+def can_balance(items):
+
+    l_itm = len(items)
+    for i in range(l_itm):
+        l_torq = 0
+        r_torq = 0
+
+        for j in range(i):
+            dis = i - j
+            l_torq += items[j] * dis
+
+        for j in range(i + 1, l_itm):
+            dis = j - i
+            r_torq += items[j] * dis
+
+        if l_torq == r_torq:
+            return i
+    
+    return -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
