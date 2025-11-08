@@ -1,3 +1,5 @@
+from itertools import combinations
+
 g = 100
 
 def ryerson_letter_grade(n):
@@ -78,10 +80,10 @@ def is_cyclops(n):
 
 def is_chess_960(row):
      fir_pos_r = row.index("r")
-     sec_pos_r = row.index("r", fir_pos_r + 1)
+     sec_pos_r = row.index("r", fir_pos_r + 1)#row.rindex("r")
      pos_king = row.index("K")
      fir_pos_b = row.index("b")
-     sec_pos_b = row.index("b", fir_pos_b + 1)
+     sec_pos_b = row.index("b", fir_pos_b + 1)#row.rindex("b")
      if (fir_pos_r < pos_king < sec_pos_r and (fir_pos_b % 2) != (sec_pos_b % 2)):
          return True
      else:
@@ -321,18 +323,129 @@ def can_balance(items):
     return -1
 
 
+def josephus(n, k):
+    totl_ppl = list(range(1, n + 1))
+    exec_ordr = []
+    crnt_indx = 0
+
+    while len(totl_ppl) > 0:
+        num_remng = len(totl_ppl)
+        rmv_indx = (crnt_indx + k - 1 ) % num_remng
+        crnt_indx = rmv_indx
+
+        rmv_prsn = totl_ppl.pop(rmv_indx)
+        exec_ordr.append(rmv_prsn)
+
+    return exec_ordr
 
 
+def lychrel(n, giveup):
+    def reverse_integer(k):
+        n_reverse = 0
+        while k > 0:
+            digit = k % 10
+            n_reverse = (n_reverse * 10) + digit
+            k //= 10
+        return n_reverse
+
+    if n == reverse_integer(n):
+        return 0
+
+    count = 0
+    add_rev_n = n
+
+    while count < giveup:
+        rev = reverse_integer(add_rev_n)
+        add_rev_n = add_rev_n + rev
+
+        count += 1
+
+        if add_rev_n == reverse_integer(add_rev_n):
+            return count
 
 
+    return None
 
 
+def powertrain(n):
+    steps = 0
+    while n >= 10:
+        digits = list(map(int, str(n)))
+        result = 1
+
+        for i in range(0, len(digits), 2):
+            base = digits[i]
+            exponent = digits[i + 1] if i + 1 < len(digits) else 0
+
+            result *= base ** exponent
+
+        n = result
+        steps += 1
+    return steps
 
 
+def first_fit_bin_packing(items, capacity):
+    
+    resulting_bins = []
+    
+    for item in items:
+        placed_in_bin = False
+
+        for i in range(len(resulting_bins)):
+            if resulting_bins[i] + item <= capacity:
+                resulting_bins[i] += item
+                placed_in_bin = True
+                break
+    
+        if not placed_in_bin:
+                resulting_bins.append(item)
+    
+    return resulting_bins
 
 
+def count_triangles(sides):
+    
+    count = 0
+
+    for x, y, z in combinations(sides, 3):
+        if x + y > z:
+            count += 1
+    return count
 
 
+def multiply_and_sort(n, multiplier):
+    
+    current_n = int(n)
+    seen = set()
+    same_seq = current_n
 
+    while current_n not in seen:
+        seen.add(current_n)
+        product = current_n * multiplier
+        current_n = int(''.join(sorted(str(product))))
+        
+
+        if current_n > same_seq:
+            same_seq = current_n
+
+    return same_seq
+
+def approval_voting(ballots):
+
+    n_candidates = len(ballots[0])
+
+    approvals = [0] * n_candidates
+
+    for ballot in ballots:
+        for i, vote in enumerate(ballot):
+            if vote == 'Y':
+                approvals[i] += 1
+
+    winning_candidate = approvals.index(max(approvals))
+
+    return winning_candidate
+
+
+def vigenere(text, key, direction):
 
 
