@@ -1,5 +1,6 @@
 from itertools import combinations
-
+import datetime
+import heapq
 g = 100
 
 def ryerson_letter_grade(n):
@@ -447,5 +448,194 @@ def approval_voting(ballots):
 
 
 def vigenere(text, key, direction):
+    
+    key = (key * ((len(text)) // len(key) + 1))[:len(text)]
+
+    result = []
+
+    for t_char, k_char in zip(text, key):
+        t_index = ord(t_char) - ord('a')
+        k_index = ord(k_char) - ord('a')
+
+        new_index = (t_index + direction*k_index)%26
+
+        result.append(chr(new_index + ord('a')))
+
+    return ''.join(result)
+
+
+def count_friday_13s(start, end):
+
+    count_friday_13th = 0
+    start_year = start.year 
+    end_year = end.year
+
+    for year in range(start_year, end_year + 1):
+        for month in range(1,13):
+            
+            current_date = datetime.date(year,month, 13)
+
+            if start <= current_date <= end and current_date.weekday() == 4:
+                count_friday_13th += 1 
+
+    return count_friday_13th
+
+def bug_in_a_line(board):
+    
+    lights = list(board)
+    len_board = len(board)
+    pos = 0
+    steps = 0
+
+    while 0 <= pos < len_board:
+        if lights[pos] == 'G':
+            lights[pos] = 'Y'
+            pos += 1
+
+        elif lights[pos] == 'Y':
+            lights[pos] = 'R'
+            pos += 1
+
+        else:
+            lights[pos] = 'G'
+            pos -= 1
+
+        steps += 1
+
+    return steps
+
+
+def albuquerque_stretch(text):
+
+    result = ""
+
+    for c in range(len(text)):
+
+        if text[c] in text[:c]:
+            
+            find_str = text[c-1::-1]
+            find_str = find_str.find(text[c])
+            result += text[c-find_str-1:c+1]
+
+        else:
+            result += text[c]
+
+    return result
+
+def double_ended_pop(items, k):
+    n = len(items)
+
+    prefix = [0] * (k + 1)
+    for i in range(1, k+1):
+        prefix[i] = prefix[i - 1] + items[i - 1]
+
+    suffix = [0] * (k + 1)
+    for i in range(1, k+1):
+        suffix[i] = suffix[i - 1] + items[-i]
+
+    max_sum = 0
+
+    for i in range(0, k+1):
+        if i <= n and (k-1) <= n:
+            total = prefix[i] + suffix[k - i]
+            max_sum = max(max_sum, total)
+
+    return max_sum
+
+
+def first_singleton(text):
+
+    char_count = {}
+
+    for char in text:
+        char_count[char] = char_count.get(char, 0) + 1
+
+    for char in text:
+        if char_count[char] == 1:
+            return char
+    
+    return None
+
+
+def maximum_repeated_suffix(items):
+
+    n = len(items)
+    max_len = 0
+
+    for m in range(1, n//2 + 1):
+        if items[n - m : n] == items[n - 2*m : n - m]:
+            max_len = m
+
+    return max_len
+
+def loopless_walk(steps):
+    
+    repeated_char = set()
+    result = []
+
+    for char in steps:
+        
+        if char in repeated_char:
+            
+            while result and result[-1] != char:
+                repeated_char.remove(result.pop())
+            result.pop()
+
+        result.append(char)
+        repeated_char.add(char)
+    
+    return ''.join(result)
+ 
+
+def max_blocks(permutation):
+
+    n = len(permutation)
+    on = [True] * n
+    blocks = 1
+    max_blocks = 1
+
+    for p in permutation:
+        on[p] = False
+        left_on = (p > 0 and on[p - 1])
+        right_on = (p < n -1 and on[p+1])
+
+        if left_on and right_on:
+            blocks -= 1
+        elif not left_on and not right_on:
+            pass
+        else:
+            blocks -= 1
+
+        max_blocks = max(max_blocks, blocks)
+
+    return max_blocks
+
+
+def split_at_none(items):
+    result = []
+    current = []
+
+    for item in items:
+        if item is None:
+            result.append(current)
+            current = []
+        else:
+            current.append(item)
+    result.append(current)
+    return result
+
+def merge_biggest(items):
+    heap = [-x for x in items]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        a = -heapq.heappop(heap)
+        b = -heapq.heappop(heap)
+        if a != b:
+            heapq.heappush(heap, -(abs(a - b)))
+
+    return -heap[0] if heap else 0
+
+
 
 
