@@ -1,6 +1,8 @@
 from itertools import combinations
 import datetime
 import heapq
+from fractions import Fraction
+
 g = 100
 
 def ryerson_letter_grade(n):
@@ -636,6 +638,32 @@ def merge_biggest(items):
 
     return -heap[0] if heap else 0
 
+def bowling_score(frames):
 
+    rolls = []
+    for frame in frames:
+        for c in frame:
+            if c == "X":
+                rolls.append(10)
+            elif c == "/":
+                rolls.append(10 - rolls[-1])
+            elif c == "-":
+                rolls.append(0)
+            else:
+                rolls.append(int(c))
 
+    score = 0
+    roll_index = 0
 
+    for frame in range(10):
+        if rolls[roll_index] == 10:
+            score += 10 + rolls[roll_index + 1] + rolls[roll_index + 2]
+            roll_index += 1
+        elif rolls[roll_index] + rolls[roll_index + 1] == 10:
+            score += 10 + rolls[roll_index + 2]
+            roll_index += 2
+        else:
+            score += rolls[roll_index] + rolls[roll_index + 1]
+            roll_index += 2
+
+    return score
