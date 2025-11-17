@@ -667,3 +667,189 @@ def bowling_score(frames):
             roll_index += 2
 
     return score
+
+
+def pyramid_blocks(n, m, h):
+
+    return (n * m * h) + ((n + m) * h * (h - 1) // 2) + ((h - 1) * h * (2 * h - 1) // 6)
+
+
+def scylla_or_charybdis(moves, n):
+    len_moves = len(moves)
+    smallest_k = 0
+    min_steps = float('inf')
+
+
+    for k in range(1, len_moves + 1):
+        pos = 0
+        steps = 0
+
+        for i in range(k - 1, len_moves, k):
+            steps += 1
+            pos += 1 if moves[i] == '+' else -1
+            
+            if abs(pos) >= n:
+                if steps < min_steps or (steps == min_steps and k < smallest_k):
+                    min_steps = steps
+                    smallest_k = k
+                break
+
+    return smallest_k
+
+
+def tukeys_ninthers(items):
+
+    while len(items) > 1:
+        medians = []
+        for m in range(0, len(items), 3):
+            triplet = sorted(items[m:m+3])
+            medians.append(triplet[len(triplet)//2])
+        items = medians
+    return items[0]
+
+
+def collect_numbers(perm):
+    n = len(perm)
+    inv = [0] * n
+    
+    for i, val in enumerate(perm):
+        inv[val] = i
+    
+    rounds = 1
+
+    for i in range (1, n):
+        if inv[i] < inv[i - 1]:
+            rounds += 1
+
+    return rounds
+
+
+def two_summers(items, goal, i=0, j=None):
+    j = len(items) - 1 if j is None else j
+    while i < j:
+        x = items[i] + items[j]
+        if x == goal:
+            return True  
+        elif x < goal:
+            i += 1  
+        else:
+            j -= 1  
+    return False
+
+def three_summers(items, goal):
+    for k in range (len(items) - 2):
+        x = items[k]
+        remaining_goal = goal - x
+
+        if two_summers(items, remaining_goal, i=k+1):
+            return True
+    return False
+
+
+def count_carries(a, b):
+    carry = 0
+    count = 0
+
+    while a > 0 or b > 0:
+        da = a % 10
+        db = b % 10
+        s = db + da + carry
+
+        if s >= 10:
+            count += 1
+            carry = 1
+        else:
+            carry = 0
+
+        a //= 10
+        b //= 10
+
+    return count
+
+
+def duplicate_digit_bonus(n):
+    s = str(n)
+    total_score = 0
+    i = 0
+    length = len(s)
+
+    while i < length:
+        j = i
+        while j < length and s[j] == s[i]:
+            j += 1
+        block_len = j - i
+
+        if block_len > 1:  
+            score = 10 ** (block_len - 2)
+            if j == length:  
+                score *= 2
+            total_score += score
+
+        i = j
+
+    return total_score
+
+
+def remove_after_kth(items, k = 1):
+    if k == 0:
+        return []
+
+    counts = {}
+    result = []
+
+    for item in items:
+        current_count = counts.get(item, 0)
+
+        if current_count < k:
+            result.append(item)
+            counts[item] = current_count + 1
+
+    return result
+
+
+def first_preceded_by_smaller(items, k = 1):
+    
+    for i in range(len(items)):
+        
+        current = items[i]
+        smaller_count = sum(1 for j in range(i) if items[j] < current)
+        
+        if smaller_count >= k:
+            return current
+    
+    return None
+
+
+def count_and_say(digits):
+
+    if not digits:
+        return ""
+
+    result = []
+    count = 1
+
+    for i in range(1, len(digits)):
+        if digits[i] == digits[i - 1]:
+            count += 1
+        else:
+            result.append(str(count))
+            result.append(digits[i - 1])
+            count = 1
+
+    result.append(str(count))
+    result.append(digits[-1])
+
+    return "".join(result)
+
+
+def reverse_ascending_sublists(items):
+
+    result = []
+    start = 0
+
+    for i in range(1, len(items) + 1):
+        if i == len(items) or items[i] <= items[i - 1]:
+            result.extend(reversed(items[start:i]))
+            start = i
+
+    return result
